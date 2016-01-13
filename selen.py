@@ -10,6 +10,8 @@ from datetime import date, timedelta
 import csv
 from pyvirtualdisplay import Display
 
+datum= str(time.strftime("%Y-%m-%d"))
+
 display = Display(visible=0, size=(1024, 768))
 display.start()
 
