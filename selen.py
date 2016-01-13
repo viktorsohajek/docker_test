@@ -65,7 +65,7 @@ dict['Zbozi.cz']['Login_3'] = {'Login': 'ppc.bigbrands.cz@gmail.com',
 
 ### DEFINICE ###
 #user input - cesta k souboru, kam se maji statistiky ukladat
-save_path="/Users/viktorsohajek/Downloads/zbozi_stats/"
+save_path="/"
 #set current date as "today - delta"
 delta=2
 current_date = '{d.day}.{d.month}.{d.year}'.format(d=datetime.datetime.now()-timedelta(delta))
