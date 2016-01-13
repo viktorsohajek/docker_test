@@ -8,6 +8,10 @@ import os
 import datetime
 from datetime import date, timedelta
 import csv
+from pyvirtualdisplay import Display
+
+display = Display(visible=0, size=(1024, 768))
+display.start()
 
 ### LIST SHOPU ###
 yesterday = date.today() - timedelta(1)
@@ -194,6 +198,7 @@ scrape(driver,shop_id,shop_shortcut)
 
 #zavre browser
 driver.close()
+display.stop()
 
 time.sleep(5)
 
