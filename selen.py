@@ -228,3 +228,8 @@ for filename in os.listdir(save_path):
 for filename in os.listdir(save_path):
     if not filename.startswith("out_"):
         os.remove(filename)
+
+
+cr = csv.reader(open(savepath+"out_zbozi_stats_bb.csv","rb"))
+for row in cr:    
+    print row
