@@ -232,6 +232,6 @@ for filename in os.listdir(save_path):
         os.remove(filename)
 
 
-cr = csv.reader(open(savepath+"out_zbozi_stats_bb.csv","rb"))
+cr = csv.reader(open(save_path+"out_zbozi_stats_bb.csv","rb"))
 for row in cr:    
     print row
