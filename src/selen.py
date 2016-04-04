@@ -38,7 +38,7 @@ mode = parameters.get('Mode')
 
 ### DEFINITION OF PARAMETERS ###
 #user input - cesta k souboru, kam se maji statistiky ukladat
-save_path="/src/data/out/"
+save_path="/src/data/out/tables/"
 #set current date as "today - delta"
 delta=2
 current_date = str((datetime.datetime.now()-timedelta(delta)).date())
