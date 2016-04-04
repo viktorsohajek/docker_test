@@ -8,7 +8,7 @@
             "tables": [
                 {
                     "source": "out_zbozi_stats_pd.csv",
-                    "destination": "in.c-scrapers.zbozi_pd",
+                    "destination": "in.c-scrapers.docker_test",
                     "incremental": false,
                     "primary_key": [],
                     "delete_where_values": [],
