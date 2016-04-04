@@ -112,7 +112,9 @@ dict['Zbozi.cz']['Login_3'] = {'Login': 'ppc.bigbrands.cz@gmail.com',
 ### /LIST SHOPU ###
 
 
-
+#creates /data/out/ folder
+if not os.path.isdir(save_path):
+   os.makedirs(save_path)
 
 #zmeni working directory na slozku, kam se ukladaji statistiky
 os.chdir(save_path)
