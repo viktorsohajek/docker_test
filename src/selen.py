@@ -358,3 +358,8 @@ display.stop()
 time.sleep(5)
 
 os.chdir(save_path)
+
+#test print
+cr = csv.reader(open(save_path+"out_zbozi_stats_bb.csv","rb"))
+for row in cr:    
+    print row
