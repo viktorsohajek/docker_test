@@ -323,37 +323,20 @@ if mode == 'summary':
     date_from=stats_dates[0]
     date_to=stats_dates[len(stats_dates)-1]
 
+    for account in parameters.get('Accouts').keys():
+
         # zaloguje usera 1
-    lookup(driver,dict['Zbozi.cz']['Login_1']['Login'], dict['Zbozi.cz']['Login_1']['Password'])
+    lookup(driver,parameters.get('Accouts').get(account).get('Login'), parameters.get('Accouts').get(account).get('Password'))
     time.sleep(5)
+
+    no_of_shops=len(parameters.get('Accouts').get(account).get('Shop_name'))
 
     #for i in range(0,2):
     #zavola scraping
-    for index in range(0,3):
-        shop_id = dict['Zbozi.cz']['Login_1']['Shop_id'][index]
-        shop_shortcut = dict['Zbozi.cz']['Login_1']['Shop_shortcut'][index]   
+    for index in range(0,no_of_shops):
+        shop_id = parameters.get('Accouts').get(account).get('Shop_id')[index]
+        shop_shortcut = parameters.get('Accouts').get(account).get('Shop_shortcut')[index]   
         scrape(driver,shop_id,shop_shortcut,date_from,date_to)
-
-
-    # zaloguje usera 2
-    lookup(driver,dict['Zbozi.cz']['Login_2']['Login'], dict['Zbozi.cz']['Login_2']['Password'])
-    time.sleep(5)
-
-    #zavola scraping
-    shop_id = dict['Zbozi.cz']['Login_2']['Shop_id']
-    shop_shortcut = dict['Zbozi.cz']['Login_2']['Shop_shortcut']
-    scrape(driver,shop_id,shop_shortcut,date_from,date_to)
-
-
-    # zaloguje usera 3
-    lookup(driver,dict['Zbozi.cz']['Login_3']['Login'], dict['Zbozi.cz']['Login_3']['Password'])
-    time.sleep(5)
-
-
-    #zavola scraping
-    shop_id = dict['Zbozi.cz']['Login_3']['Shop_id']
-    shop_shortcut = dict['Zbozi.cz']['Login_3']['Shop_shortcut']
-    scrape(driver,shop_id,shop_shortcut,date_from,date_to)
 
     #poresi csvcka
     csv_handeler(mode,date_from)
