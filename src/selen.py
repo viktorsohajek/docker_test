@@ -89,36 +89,7 @@ for i in range(delta.days+1):
 
 
 ### /DEFINITION OF PARAMETERS ###
-
-
-
-### LIST SHOPU ###
-dict={}
-dict['Zbozi.cz'] = {}
-dict['Zbozi.cz']['Login_1'] = {'Login': 'it@snowboards.cz',
-                     'Password': 'wsappcsk25',
-                     'Url_login': '',
-                     'Shop': ['Sporty.cz','Snowboards.cz','Prodeti.cz'],
-                     'Shop_shortcut': ['sm','snb','pd'],
-                     'Shop_id': ['15801','9072','109963'],
-                     'Url_stats': [''] }
-
-
-dict['Zbozi.cz']['Login_2'] = {'Login': 'jc@limal.cz',
-                     'Password': '0EF78C6C',
-                     'Url_login': '',
-                     'Shop': 'Rozbaleno.cz',
-                     'Shop_shortcut': 'ro',
-                     'Shop_id': '90738',
-                     'Url_stats': [''] }
-
-dict['Zbozi.cz']['Login_3'] = {'Login': 'ppc.bigbrands.cz@gmail.com',
-                     'Password': '253CD1C7',
-                     'Url_login': '',
-                     'Shop': 'BigBrands.cz',
-                     'Shop_shortcut': 'bb',
-                     'Shop_id': '105672',
-                     'Url_stats': [''] }                     
+            
 
 
 ### /LIST SHOPU ###
