@@ -30,8 +30,6 @@ parameters = cfg.get_parameters()
 
 #date
 scrape_date = str(time.strftime("%Y-%m-%d"))
-yesterday = date.today() - timedelta(1)
-date = yesterday.strftime('%Y-%m-%d')
 
 #mode
 mode = parameters.get('Mode')
