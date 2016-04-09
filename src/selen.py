@@ -16,10 +16,10 @@ print "TEST OK"
 display = Display(visible=0, size=(1024, 768))
 display.start()
 
-
+print "CWD is ..."+os.getcwd()
 
 # initialize KBC configuration 
-cfg = docker.Config('src/data/')
+cfg = docker.Config(os.path.abspath(os.path.join(yourpath, os.pardir))+'/data/')
 # loads application parameters - user defined
 parameters = cfg.get_parameters()
 
@@ -35,10 +35,11 @@ date = yesterday.strftime('%Y-%m-%d')
 mode = parameters.get('Mode')
 #mode = 'summary'
 #mode = 'by_category'
+print "Mode is ... "+mode
 
 ### DEFINITION OF PARAMETERS ###
 #user input - cesta k souboru, kam se maji statistiky ukladat
-save_path="/data/out/tables/"
+save_path=os.path.abspath(os.path.join(yourpath, os.pardir))+'/data/out/tables/'
 #set current date as "today - delta"
 delta=2
 current_date = str((datetime.datetime.now()-timedelta(delta)).date())
