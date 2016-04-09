@@ -327,8 +327,11 @@ time.sleep(5)
 
 os.chdir(save_path)
 
+sample_account=parameters.get('Accounts').keys()[0]
+sample_shortcut=parameters.get('Accounts').get(sample_account).get('Shop_shortcut')[0]
+
 print "Sample output:"
 #test print
-cr = csv.reader(open(save_path+"out_zbozi_stats_bb.csv","rb"))
+cr = csv.reader(open(save_path+"out_zbozi_stats_"+sample_shortcut+".csv","rb"))
 for row in cr:    
     print row
