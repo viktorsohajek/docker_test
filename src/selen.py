@@ -60,22 +60,34 @@ def validate(date_text):
         raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
 
-#initialize stats_dates vector
-stats_dates={}
+#initialize scrape_dates vector
+scrape_dates={}
 
-#date preset from input parameters. Bud date_preset='Yesteday' nebo vsechny stats_dates ve stanovenem intervalu
+#date preset from input parameters. Bud date_preset='Yesteday'/'last_week' nebo vsechny datumy ve stanovenem intervalu
 #! parametr 'date_preset' ma prednost.
 if parameters.get('Date_preset')=='Yesterday':
     yesterday = date.today() - timedelta(1)
-    stats_dates[0] = yesterday.strftime('%Y-%m-%d')
+    d1=yesterday
+    d2=d1
+elif parameters.get('Date_preset')=='last_week':
+    d1 = date.today() - timedelta(7)
+    d2 = date.today() - timedelta(1)
+elif parameters.get('Date_preset')=='last_31_days':
+    d1 = date.today() - timedelta(31)
+    d2 = date.today() - timedelta(1)    
+elif parameters.get('Date_preset')=='last_year':
+    d1 = date.today() - timedelta(365)
+    d2 = date.today() - timedelta(1)
+#customdate if not preseted
 else:
     validate(parameters.get('Date_from'))
     validate(parameters.get('Date_to'))
     d1=datetime.datetime.strptime(parameters.get('Date_from'),'%Y-%m-%d')
     d2=datetime.datetime.strptime(parameters.get('Date_to'),'%Y-%m-%d')
-    delta = d2 - d1
-    for i in range(delta.days+1):
-        stats_dates[i]=(d1+timedelta(i)).strftime('%Y-%m-%d')
+#vypocet timedelty, ktera urcuje delku tahanych dni zpet    
+delta = d2 - d1
+for i in range(delta.days+1):
+    scrape_dates[i]=(d1+timedelta(i)).strftime('%Y-%m-%d')
 
 
 
