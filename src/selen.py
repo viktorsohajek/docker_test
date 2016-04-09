@@ -58,8 +58,8 @@ def validate(date_text):
         raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
 
-#initialize scrape_dates vector
-scrape_dates={}
+#initialize stats_dates vector
+stats_dates={}
 
 #date preset from input parameters. Bud date_preset='Yesteday'/'last_week' nebo vsechny datumy ve stanovenem intervalu
 #! parametr 'date_preset' ma prednost.
@@ -85,7 +85,7 @@ else:
 #vypocet timedelty, ktera urcuje delku tahanych dni zpet    
 delta = d2 - d1
 for i in range(delta.days+1):
-    scrape_dates[i]=(d1+timedelta(i)).strftime('%Y-%m-%d')
+    stats_dates[i]=(d1+timedelta(i)).strftime('%Y-%m-%d')
 
 
 
