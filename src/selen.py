@@ -11,12 +11,12 @@ from datetime import date, timedelta
 import csv
 from pyvirtualdisplay import Display
 
-print "TEST OK"
+print "Python libraries loaded."
 
 display = Display(visible=0, size=(1024, 768))
 display.start()
 
-print "CWD is ... "+os.getcwd()
+print "Current Working Directory is ... "+os.getcwd()
 
 print "Config taken from ... "+os.path.abspath(os.path.join(os.getcwd(), os.pardir))+'data/'
 
@@ -86,7 +86,6 @@ else:
 delta = d2 - d1
 for i in range(delta.days+1):
     stats_dates[i]=(d1+timedelta(i)).strftime('%Y-%m-%d')
-
 
 
 ### /DEFINITION OF PARAMETERS ###
@@ -276,6 +275,8 @@ time.sleep(5)
 ## SCRAPING
 
 if mode == 'by_category':
+    print "Sorry, by_category mode is currently unavaliable. Contact the administrator."
+'''    
     # FOR CYKLUS pres vsechny vybrane scrape_datey v scrape_dates vektoru
     for i in range(len(stats_dates)):
         stats_date=stats_dates[i]
@@ -316,6 +317,7 @@ if mode == 'by_category':
         #poresi csvcka
         csv_handeler(mode,stats_date)
 
+'''
 
 
 
@@ -323,20 +325,19 @@ if mode == 'summary':
     date_from=stats_dates[0]
     date_to=stats_dates[len(stats_dates)-1]
 
-    for account in parameters.get('Accouts').keys():
+    for account in parameters.get('Accounts').keys():
+        # zaloguje usera 
+        lookup(driver,parameters.get('Accounts').get(account).get('Login'), parameters.get('Accounts').get(account).get('Password'))
+        time.sleep(5)
 
-        # zaloguje usera 1
-    lookup(driver,parameters.get('Accouts').get(account).get('Login'), parameters.get('Accouts').get(account).get('Password'))
-    time.sleep(5)
+        no_of_shops=len(parameters.get('Accounts').get(account).get('Shop_name'))
 
-    no_of_shops=len(parameters.get('Accouts').get(account).get('Shop_name'))
-
-    #for i in range(0,2):
-    #zavola scraping
-    for index in range(0,no_of_shops):
-        shop_id = parameters.get('Accouts').get(account).get('Shop_id')[index]
-        shop_shortcut = parameters.get('Accouts').get(account).get('Shop_shortcut')[index]   
-        scrape(driver,shop_id,shop_shortcut,date_from,date_to)
+        
+        #zavola scraping
+        for index in range(0,no_of_shops):
+            shop_id = parameters.get('Accounts').get(account).get('Shop_id')[index]
+            shop_shortcut = parameters.get('Accounts').get(account).get('Shop_shortcut')[index]
+            scrape(driver,shop_id,shop_shortcut,date_from,date_to)
 
     #poresi csvcka
     csv_handeler(mode,date_from)
@@ -355,6 +356,7 @@ time.sleep(5)
 
 os.chdir(save_path)
 
+print "Sample output:"
 #test print
 cr = csv.reader(open(save_path+"out_zbozi_stats_bb.csv","rb"))
 for row in cr:    
