@@ -18,7 +18,7 @@ Example configuration of parameters:
 
 #Parameters options#
 
-**Date_preset**:
+* **Date_preset**:
 	* "Yesterday" -> extracts data for yesterday only
 	* "last_week" -> extracts data for last 7 days
 	* "last_31_days" -> extracts data for last 31 days
