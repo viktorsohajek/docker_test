@@ -16,6 +16,15 @@ Example configuration of parameters:
     }
 ```
 
+#Parameters options#
+
+**Date_preset**:
+	* "Yesterday" -> extracts data for yesterday only
+	* "last_week" -> extracts data for last 7 days
+	* "last_31_days" -> extracts data for last 31 days
+	* "last_year" -> extracts data for last year
+
+
 ## Shop credential ##
 
 The shop credentials are to be configured through parameters in configuration. Right now you must configure them directly to the python code. Ask administrator if editations are necessary.
