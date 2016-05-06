@@ -296,18 +296,18 @@ if mode == 'summary':
     date_from=stats_dates[0]
     date_to=stats_dates[len(stats_dates)-1]
 
-    for account in parameters.get('Accounts').keys():
+    for account_number in range(0,len(parameters.get('Accounts'))):
         # zaloguje usera 
-        lookup(driver,parameters.get('Accounts').get(account).get('Login'), parameters.get('Accounts').get(account).get('Password'))
+        lookup(driver,parameters.get('Accounts')[account_number].get('Login'), parameters.get('Accounts')[account_number].get('Password'))
         time.sleep(5)
 
-        no_of_shops=len(parameters.get('Accounts').get(account).get('Shop_name'))
+        no_of_shops=len(parameters.get('Accounts')[account_number].get('Shop_name'))
 
         
         #zavola scraping
         for index in range(0,no_of_shops):
-            shop_id = parameters.get('Accounts').get(account).get('Shop_id')[index]
-            shop_shortcut = parameters.get('Accounts').get(account).get('Shop_shortcut')[index]
+            shop_id = parameters.get('Accounts')[account_number].get('Shop_id')[index]
+            shop_shortcut = parameters.get('Accounts')[account_number].get('Shop_shortcut')[index]
             scrape(driver,shop_id,shop_shortcut,date_from,date_to)
 
     #poresi csvcka
@@ -327,8 +327,8 @@ time.sleep(5)
 
 os.chdir(save_path)
 
-sample_account=parameters.get('Accounts').keys()[0]
-sample_shortcut=parameters.get('Accounts').get(sample_account).get('Shop_shortcut')[0]
+
+sample_shortcut=parameters.get('Accounts')[0].get('Shop_shortcut')[0]
 
 print "Sample output:"
 #test print
