@@ -24,7 +24,7 @@ The shop credentials are configured through parameters in configuration. You nee
 
 	**Note**: setting one of foregoing values causes ignoring of **Date_from** and **Date_to** parameters. If invalid **Date_preset** parameter is give, the **Date_from** and **Date_to** parameters are taken into account.
 
-	* **Date_preset**:
+	* **Mode**:
 		* "summary" -> extracts data agregated by - shop **x** day **x** metrics. 
 		* "by_category" -> extracts data agregated by - shop **x** day **x** product_category **x** metrics.  **!! not yet fully developed !!** - follow code on github to see details. 
 
