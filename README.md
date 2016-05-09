@@ -14,7 +14,7 @@ The shop credentials are configured through parameters in configuration. You nee
 
 # Parameters options #
 
-* **DATE PARAMETERS**
+* **DATE & MODE PARAMETERS**
 
 	* **Date_preset**:
 		* "Yesterday" -> extracts data for yesterday only
@@ -94,3 +94,5 @@ Example configuration of parameters:
 ## Comunication with KBC ##
 
 The extractor is comuticating with KBC through output mapping settings, which configured by standard way (through UI just like it is in any transformation).
+
+**Note**: The json parameters are set up by the Json Schema. See https://developers.keboola.com/extend/registration/configuration-schema/ for more details.
