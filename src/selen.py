@@ -21,7 +21,7 @@ print "Current Working Directory is ... "+os.getcwd()
 print "Config taken from ... "+os.path.abspath(os.path.join(os.getcwd(), os.pardir))+'data/'
 
 # initialize KBC configuration 
-cfg = docker.Config('/data/')
+cfg = docker.Config(os.path.abspath(os.path.join(os.getcwd(), os.pardir))+'data/')
 # loads application parameters - user defined
 parameters = cfg.get_parameters()
 
