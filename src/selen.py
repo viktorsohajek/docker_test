@@ -92,9 +92,6 @@ for i in range(delta.days+1):
             
 
 
-### /LIST SHOPU ###
-
-
 #creates /data/out/ folder
 if not os.path.isdir(save_path):
    os.makedirs(save_path)
@@ -137,14 +134,14 @@ def lookup(driver, query1,query2):
 ### BROWSER START FCN ###
 
 
-def scrape(driver,web_id,shop_name,date_from,date_to):
+def scrape(driver,web_id,shop_shortcut,shop_name,date_from,date_to):
     #check if the dates from and to differs for the by_category extraction
     if mode == 'by_category' and (date_from!=date_to):
         driver.close()
         exit('Error: Extraction query for category view was called while the date_from and date_to differs.')
-    if os.path.isfile("out_zbozi_stats_"+shop_name+".csv"):
-    #    os.rename("out_zbozi_stats_"+shop_name+".csv","zbozi_stats_"+shop_name+"_"+datetime.datetime.now().isoformat()+".csv")
-        os.rename("out_zbozi_stats_"+shop_name+".csv","prior"+"_"+"zbozi_stats_"+shop_name+".csv")    
+    if os.path.isfile("out_zbozi_stats_"+shop_shortcut+".csv"):
+    #    os.rename("out_zbozi_stats_"+shop_shortcut+".csv","zbozi_stats_"+shop_shortcut+"_"+datetime.datetime.now().isoformat()+".csv")
+        os.rename("out_zbozi_stats_"+shop_shortcut+".csv","prior"+"_"+"zbozi_stats_"+shop_shortcut+".csv")    
 
     # for urls - needs d.m.Y format
     date_from_url = '{d.day}.{d.month}.{d.year}'.format(d=datetime.datetime.strptime(date_from, '%Y-%m-%d'))
@@ -156,39 +153,45 @@ def scrape(driver,web_id,shop_name,date_from,date_to):
     #zavola link na stranku statistik
     driver.get(link_web_stats)
     time.sleep(5)
+    try:
+        if mode == 'summary':
+            #zaskrtne radio pole "summary"
+            driver.find_element_by_xpath("//input[@id='sd']").click()
 
-    if mode == 'summary':
-        #zaskrtne radio pole "summary"
-        driver.find_element_by_xpath("//input[@id='sd']").click()
+        if mode == 'by_category':
+            #zaskrtne radio pole "po kategoriich"
+            driver.find_element_by_xpath("//input[@id='sg']").click()
 
-    if mode == 'by_category':
-        #zaskrtne radio pole "po kategoriich"
-        driver.find_element_by_xpath("//input[@id='sg']").click()
+        #stickne button na vygenerovani reportu
+        driver.find_element_by_xpath("//input[@id='createNewReport']").click()
 
-    #stickne button na vygenerovani reportu
-    driver.find_element_by_xpath("//input[@id='createNewReport']").click()
+        #pocka 20 sec nez se vygeneruje .csv
+        time.sleep(20)
 
-    #pocka 20 sec nez se vygeneruje .csv
-    time.sleep(20)
+        #znovu nacte stranku kvuli objeveni odkazu na ztazeni .csv v html
+        driver.get(link_web_stats)
 
-    #znovu nacte stranku kvuli objeveni odkazu na ztazeni .csv v html
-    driver.get(link_web_stats)
+        #najde link na ztazeni .csv statistik
+        for a in driver.find_elements_by_xpath("//table[@id='statisticsContainer']//tr[3]//td[5]/a"):
+    	   link_stats=a.get_attribute('href')
 
-    #najde link na ztazeni .csv statistik
-    for a in driver.find_elements_by_xpath("//table[@id='statisticsContainer']//tr[3]//td[5]/a"):
-	   link_stats=a.get_attribute('href')
+        #proklikne link_stats na stazeni .csv se statistikama
+        driver.get(link_stats)
 
-    #proklikne link_stats na stazeni .csv se statistikama
-    driver.get(link_stats)
-
-    #w8
-    time.sleep(10)
+        #w8
+        time.sleep(10)
 
 
-    #prejmenuje .csv soubor poslednich statistik na jednotny nazev, ktery pak pujde do KBC
-    for filename in os.listdir(save_path):
-        if filename.startswith("statistics"):
-            os.rename(filename,"zbozi_stats_"+shop_name+".csv")
+        #prejmenuje .csv soubor poslednich statistik na jednotny nazev, ktery pak pujde do KBC
+        for filename in os.listdir(save_path):
+            if filename.startswith("statistics"):
+                os.rename(filename,"zbozi_stats_"+shop_shortcut+".csv")
+        print "Statistics for shop "+shop_name+" has been succesfuly processed."
+    except:
+        print "(!!!) Statistics for shop "+shop_name+" NOT FOUND on the Zbozi.cz web."
+        with open(save_path+"out_zbozi_stats_"+shop_shortcut+".csv", 'w') as csvoutput:
+            writer = csv.writer(csvoutput, lineterminator='\n',delimiter=",")
+            writer.writerow(['date','clicks','impressions','ctr','cpc_avg','cpc_all','position_avg','conversion_count','conversion_value','converion_rate','conversion_avg_price','scrape_date'])
 
 
 #predelavac csvcek do slusny podoby
@@ -308,7 +311,8 @@ if mode == 'summary':
         for index in range(0,no_of_shops):
             shop_id = parameters.get('Accounts')[account_number].get('Shop_id')[index]
             shop_shortcut = parameters.get('Accounts')[account_number].get('Shop_shortcut')[index]
-            scrape(driver,shop_id,shop_shortcut,date_from,date_to)
+            shop_name = parameters.get('Accounts')[account_number].get('Shop_name')[index]
+            scrape(driver,shop_id,shop_shortcut,shop_name,date_from,date_to)
 
     #poresi csvcka
     csv_handeler(mode,date_from)
@@ -328,10 +332,13 @@ time.sleep(5)
 os.chdir(save_path)
 
 
-sample_shortcut=parameters.get('Accounts')[0].get('Shop_shortcut')[0]
-
-print "Sample output:"
-#test print
-cr = csv.reader(open(save_path+"out_zbozi_stats_"+sample_shortcut+".csv","rb"))
-for row in cr:    
-    print row
+sample_index=0
+try:
+    sample_shortcut=parameters.get('Accounts')[0].get('Shop_shortcut')[sample_index]
+    print "Sample output:"
+    #test print
+    cr = csv.reader(open(save_path+"out_zbozi_stats_"+sample_shortcut+".csv","rb"))
+    for row in cr:    
+        print row
+except IOError:
+    print "Sample of "+parameters.get('Accounts')[0].get('Shop_name')[sample_index]+" was not avaliable..."
